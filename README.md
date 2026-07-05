@@ -30,3 +30,16 @@ python3 -m http.server 8000
 ```
 
 Then visit http://localhost:8000.
+
+## "Module not found" errors after adding a package
+
+If `docker compose up` shows `Module not found` errors for packages that are clearly in `package.json`, it's caused by `docker-compose.yml` mounting `node_modules` as an anonymous volume (`- /app/node_modules`). That volume persists across container recreates independent of the image, so it can keep serving a stale `node_modules` even after rebuilding the image with the right dependencies.
+
+Fix:
+
+```
+docker compose down -v
+docker compose up -d --build
+```
+
+`down -v` drops the stale anonymous volume, `--build` forces a fresh `npm install` against the current `package.json`. A plain `docker compose up` or `--build` alone is not enough after adding a new npm package.
