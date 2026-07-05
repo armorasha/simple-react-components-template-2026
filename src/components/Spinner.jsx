@@ -9,7 +9,7 @@ const SIZE_CLASSES = {
 export default function Spinner({ size = 'md' }) {
   return (
     <div
-      className={`inline-block rounded-full border-pptx-blue/25 border-t-pptx-blue animate-spin ${SIZE_CLASSES[size]}`}
+      className={`inline-block rounded-full border-pptx-amber/25 border-t-pptx-amber animate-spin ${SIZE_CLASSES[size]}`}
       role="status"
       aria-label="Loading"
     />

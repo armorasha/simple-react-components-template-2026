@@ -6,6 +6,13 @@ import Checkbox from './components/Checkbox';
 import Radio from './components/Radio';
 import Toggle from './components/Toggle';
 import Badge from './components/Badge';
+import StatusLight from './components/StatusLight';
+import Gauge from './components/Gauge';
+import MetricTile from './components/MetricTile';
+import Sparkline from './components/Sparkline';
+import AlarmPanel from './components/AlarmPanel';
+import EStopButton from './components/EStopButton';
+import SquareButton from './components/SquareButton';
 import Card from './components/Card';
 import Tabs from './components/Tabs';
 import Alert from './components/Alert';
@@ -23,10 +30,12 @@ import DeckLineLayerMap from './components/DeckLineLayerMap';
 
 export default function App() {
   const [toggleOn, setToggleOn] = useState(true);
-  const [topPrimarySelected, setTopPrimarySelected] = useState(false);
-  const [topSecondarySelected, setTopSecondarySelected] = useState(false);
-  const [topDangerSelected, setTopDangerSelected] = useState(false);
+  const [topPrimarySelected, setTopPrimarySelected] = useState(true);
+  const [topSecondarySelected, setTopSecondarySelected] = useState(true);
+  const [topDangerSelected, setTopDangerSelected] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [dangerModalOpen, setDangerModalOpen] = useState(false);
   const [sliderValue, setSliderValue] = useState(40);
 
   return (
@@ -37,7 +46,15 @@ export default function App() {
       </header>
 
       <Card title="Buttons">
-        <Muted>Click to toggle</Muted>
+        <div className="flex gap-3 flex-wrap">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="danger">Danger</Button>
+        </div>
+
+        <Muted>
+          <span className="mt-6 block text-xs uppercase tracking-wide">Click to toggle</span>
+        </Muted>
         <div className="flex gap-3 flex-wrap mt-2">
           <Button
             variant="primary"
@@ -107,6 +124,99 @@ export default function App() {
         </div>
       </Card>
 
+      <Card title="Status lights">
+        <div className="flex gap-6 flex-wrap">
+          <StatusLight status="info">Info</StatusLight>
+          <StatusLight status="warning">Warning</StatusLight>
+          <StatusLight status="critical">Critical</StatusLight>
+          <StatusLight status="success">Online</StatusLight>
+          <StatusLight status="neutral">Neutral</StatusLight>
+        </div>
+
+        <Muted>
+          <span className="mt-6 block text-xs uppercase tracking-wide">No label</span>
+        </Muted>
+        <div className="flex gap-4 flex-wrap mt-2">
+          <StatusLight status="info" />
+          <StatusLight status="warning" />
+          <StatusLight status="critical" />
+          <StatusLight status="success" />
+          <StatusLight status="neutral" />
+        </div>
+
+        <Muted>
+          <span className="mt-6 block text-xs uppercase tracking-wide">Small</span>
+        </Muted>
+        <div className="flex gap-6 flex-wrap mt-2">
+          <StatusLight status="info" size="sm">Info</StatusLight>
+          <StatusLight status="warning" size="sm">Warning</StatusLight>
+          <StatusLight status="critical" size="sm">Critical</StatusLight>
+          <StatusLight status="success" size="sm">Online</StatusLight>
+          <StatusLight status="neutral" size="sm">Neutral</StatusLight>
+        </div>
+      </Card>
+
+      <Card title="Gauges">
+        <div className="flex gap-8 flex-wrap">
+          <Gauge label="Pressure" value={42} unit="psi" status="info" />
+          <Gauge label="Temperature" value={78} unit="°C" status="warning" />
+          <Gauge label="Flow rate" value={95} unit="%" status="critical" />
+        </div>
+      </Card>
+
+      <Card title="Metric tiles">
+        <div className="flex gap-4 flex-wrap">
+          <MetricTile label="RPM" value="1,842" status="info" delta="12" deltaDirection="up" />
+          <MetricTile label="Vibration" value="0.34" unit="mm/s" status="success" delta="0.02" deltaDirection="down" />
+          <MetricTile label="Bearing temp" value="86" unit="°C" status="warning" delta="3" deltaDirection="up" />
+          <MetricTile label="Uptime" value="99.2" unit="%" status="neutral" delta="0" deltaDirection="flat" />
+        </div>
+      </Card>
+
+      <Card title="Trend sparklines">
+        <div className="flex gap-8 flex-wrap">
+          <Sparkline label="Line pressure" status="info" data={[12, 14, 13, 16, 15, 18, 17, 19, 18, 21]} />
+          <Sparkline label="Motor temp" status="warning" data={[60, 62, 61, 65, 68, 70, 74, 78, 76, 79]} />
+          <Sparkline label="Fault count" status="critical" data={[0, 0, 1, 0, 2, 1, 3, 2, 4, 5]} />
+        </div>
+      </Card>
+
+      <Card title="Alarm panel">
+        <AlarmPanel
+          alarms={[
+            { id: 1, severity: 'critical', message: 'Relay node 7 link loss', time: '04:12:33 UTC' },
+            { id: 2, severity: 'warning', message: 'Sensor array 3 latency above threshold', time: '04:10:02 UTC' },
+            { id: 3, severity: 'info', message: 'Firmware update available for node 2', time: '03:58:47 UTC' },
+          ]}
+        />
+      </Card>
+
+      <Card title="Emergency stop">
+        <div className="flex gap-8 flex-wrap items-start">
+          <EStopButton />
+        </div>
+      </Card>
+
+      <Card title="Square buttons">
+        <div className="flex gap-6 flex-wrap">
+          <SquareButton variant="success" defaultSelected>
+            Start
+          </SquareButton>
+          <SquareButton variant="danger" defaultSelected>
+            Stop
+          </SquareButton>
+          <SquareButton variant="secondary" defaultSelected>
+            Pause
+          </SquareButton>
+          <SquareButton variant="primary" defaultSelected>
+            Reset
+          </SquareButton>
+          <SquareButton variant="primary" disabled>
+            Disabled
+          </SquareButton>
+        </div>
+      </Card>
+
       <Card title="Typography">
         <div className="space-y-2">
           <Heading1>Heading 1</Heading1>
@@ -148,9 +258,17 @@ export default function App() {
       </Card>
 
       <Card title="Modal">
-        <Button variant="primary" onClick={() => setModalOpen(true)}>
-          Open modal
-        </Button>
+        <div className="flex gap-3 flex-wrap">
+          <Button variant="primary" onClick={() => setModalOpen(true)}>
+            Open modal
+          </Button>
+          <Button variant="secondary" onClick={() => setInfoModalOpen(true)}>
+            Open info modal
+          </Button>
+          <Button variant="danger" onClick={() => setDangerModalOpen(true)}>
+            Open danger modal
+          </Button>
+        </div>
         <Modal
           open={modalOpen}
           title="Confirm action"
@@ -167,6 +285,24 @@ export default function App() {
           }
         >
           This will restart the affected subsystem. Continue?
+        </Modal>
+        <Modal open={infoModalOpen} title="Firmware up to date" onClose={() => setInfoModalOpen(false)} />
+        <Modal
+          open={dangerModalOpen}
+          title="Delete node record"
+          onClose={() => setDangerModalOpen(false)}
+          footer={
+            <>
+              <Button variant="secondary" size="sm" onClick={() => setDangerModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="danger" size="sm" onClick={() => setDangerModalOpen(false)}>
+                Delete
+              </Button>
+            </>
+          }
+        >
+          This will permanently remove the node record. This action cannot be undone.
         </Modal>
       </Card>
 

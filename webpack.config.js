@@ -37,5 +37,11 @@ module.exports = {
     historyApiFallback: true,
     allowedHosts: 'all',
     watchFiles: ['src/**/*'],
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+    },
   },
 };

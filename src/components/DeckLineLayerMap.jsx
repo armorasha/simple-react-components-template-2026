@@ -1,12 +1,12 @@
 import React from 'react';
 import { DeckGL } from '@deck.gl/react';
-import { LineLayer, ScatterplotLayer } from '@deck.gl/layers';
-import { Map } from 'react-map-gl/maplibre';
-import 'maplibre-gl/dist/maplibre-gl.css';
+import { LineLayer, ScatterplotLayer, BitmapLayer } from '@deck.gl/layers';
+import { TileLayer } from '@deck.gl/geo-layers';
 
 const DATA_URL = {
   AIRPORTS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json',
   FLIGHT_PATHS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/heathrow-flights.json',
+  BASEMAP_TILES: 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
 };
 
 const INITIAL_VIEW_STATE = {
@@ -17,8 +17,6 @@ const INITIAL_VIEW_STATE = {
   pitch: 50,
   bearing: 0,
 };
-
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
 
 function getTooltip({ object }) {
   return (
@@ -31,6 +29,21 @@ function getTooltip({ object }) {
 
 export default function DeckLineLayerMap() {
   const layers = [
+    new TileLayer({
+      id: 'basemap',
+      data: DATA_URL.BASEMAP_TILES,
+      minZoom: 0,
+      maxZoom: 19,
+      tileSize: 256,
+      renderSubLayers: (props) => {
+        const { west, south, east, north } = props.tile.bbox;
+        return new BitmapLayer(props, {
+          data: null,
+          image: props.data,
+          bounds: [west, south, east, north],
+        });
+      },
+    }),
     new ScatterplotLayer({
       id: 'airports',
       data: DATA_URL.AIRPORTS,
@@ -80,9 +93,7 @@ export default function DeckLineLayerMap() {
           blendAlphaDstFactor: 'one',
         }}
         getTooltip={getTooltip}
-      >
-        <Map reuseMaps mapStyle={MAP_STYLE} attributionControl={false} />
-      </DeckGL>
+      />
     </div>
   );
 }

@@ -13,7 +13,7 @@ export default function ProgressBar({ value = 0, label }) {
       )}
       <div className="w-full h-2 rounded-lg bg-pptx-charcoal-dark shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] overflow-hidden">
         <div
-          className="h-full rounded-lg bg-pptx-blue shadow-[0_0_8px_rgba(0,80,140,0.6)] transition-all w-[var(--pptx-progress)]"
+          className="h-full rounded-lg bg-pptx-amber shadow-[0_0_8px_rgba(255,119,0,0.6)] transition-all w-[var(--pptx-progress)]"
           style={{ '--pptx-progress': `${pct}%` }}
         />
       </div>
