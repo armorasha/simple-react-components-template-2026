@@ -1,0 +1,29 @@
+// Repeated uppercase caption/label pattern (MetricTile, Sparkline, Gauge, Card title area)
+.label-caption {
+  @apply text-xs uppercase tracking-wide text-pptx-tan;
+}
+
+.panel-title {
+  @apply text-pptx-gold text-lg font-extralight mb-3 tracking-wide;
+}
+
+// Typography.jsx
+.heading-1 {
+  @apply text-4xl font-extralight text-pptx-gold;
+}
+
+.heading-2 {
+  @apply text-2xl font-extralight text-pptx-gold;
+}
+
+.heading-3 {
+  @apply text-xl font-extralight text-pptx-gold;
+}
+
+.body-text {
+  @apply text-base text-pptx-cream;
+}
+
+.muted-text {
+  @apply text-sm text-pptx-tan;
+}

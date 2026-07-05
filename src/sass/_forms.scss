@@ -1,0 +1,66 @@
+// Checkbox.jsx / Radio.jsx — inline label wrapper
+.check-label {
+  @apply flex items-center gap-2 text-sm text-pptx-cream cursor-pointer disabled:cursor-not-allowed;
+}
+
+.checkbox-input {
+  @apply w-4 h-4 rounded accent-pptx-blue disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+.radio-input {
+  @apply w-4 h-4 accent-pptx-blue disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+// Select.jsx / TextInput.jsx — stacked label wrapper + shared field styling
+.field-label {
+  @apply flex flex-col gap-1 text-sm text-pptx-cream;
+}
+
+.field-input {
+  @apply bg-pptx-charcoal-dark border border-pptx-tan-dark rounded-xl px-4 py-2 text-pptx-cream placeholder-pptx-tan;
+  @apply focus:outline-none focus:border-pptx-blue focus:shadow-[inset_0_0_6px_rgba(0,0,0,0.5),0_0_12px_rgba(0,80,140,0.4)];
+  @apply disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+// Select.jsx — replaces the native OS dropdown chevron with one that matches the theme
+.select-input {
+  @apply appearance-none bg-no-repeat pr-10;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237a8ca3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 1rem center;
+  background-size: 12px 8px;
+}
+
+// Slider.jsx
+.slider-label {
+  @apply flex flex-col gap-2 text-sm text-pptx-cream w-full;
+}
+
+.slider-input {
+  @apply w-full accent-pptx-blue disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+// Toggle.jsx
+.toggle-label {
+  @apply flex items-center gap-3 text-sm text-pptx-cream cursor-pointer;
+}
+
+.toggle-track {
+  @apply relative inline-flex h-6 w-11 items-center rounded-lg transition-colors;
+  @apply bg-pptx-charcoal-dark shadow-[0_0_10px_rgba(0,80,140,0.3)];
+
+  &.checked {
+    @apply bg-pptx-blue shadow-[inset_0_0_6px_rgba(0,0,0,0.55),0_0_12px_rgba(0,80,140,0.55)];
+  }
+
+  &.disabled {
+    @apply opacity-40 cursor-not-allowed;
+  }
+}
+
+.toggle-thumb {
+  @apply inline-block h-4 w-4 transform rounded-md bg-pptx-cream transition-transform translate-x-1;
+
+  &.checked {
+    @apply translate-x-6;
+  }
+}

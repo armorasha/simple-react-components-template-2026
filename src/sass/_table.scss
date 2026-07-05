@@ -1,0 +1,24 @@
+// Table.jsx
+.table-wrap {
+  @apply overflow-x-auto rounded-xl border border-pptx-blue/15;
+}
+
+.data-table {
+  @apply w-full text-sm text-left;
+
+  thead tr {
+    @apply bg-pptx-charcoal-dark text-pptx-tan;
+  }
+
+  th {
+    @apply px-4 py-2.5 font-normal;
+  }
+
+  td {
+    @apply px-4 py-2.5;
+  }
+
+  tbody tr {
+    @apply border-t border-pptx-blue/10 text-pptx-cream hover:bg-pptx-charcoal-light/60 transition-colors;
+  }
+}

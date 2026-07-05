@@ -1,0 +1,1 @@
+.jsx files like AppLayout, AdminLayout, UserLayout, DefaultLayout, StandardFooter will be in this folder

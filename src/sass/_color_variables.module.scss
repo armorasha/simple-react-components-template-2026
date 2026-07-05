@@ -1,0 +1,74 @@
+// 1. Color variables to use in "SCSS" files, importing from tailwind.config.js
+$pptx-charcoal: theme('colors.pptx.charcoal.DEFAULT');
+$pptx-charcoal-light: theme('colors.pptx.charcoal.light');
+$pptx-charcoal-dark: theme('colors.pptx.charcoal.dark');
+
+$pptx-cream: theme('colors.pptx.cream.DEFAULT');
+$pptx-cream-dark: theme('colors.pptx.cream.dark');
+
+$pptx-amber: theme('colors.pptx.amber.DEFAULT');
+$pptx-amber-light: theme('colors.pptx.amber.light');
+$pptx-amber-dark: theme('colors.pptx.amber.dark');
+
+$pptx-gold: theme('colors.pptx.gold.DEFAULT');
+$pptx-gold-light: theme('colors.pptx.gold.light');
+$pptx-gold-dark: theme('colors.pptx.gold.dark');
+
+$pptx-tan: theme('colors.pptx.tan.DEFAULT');
+$pptx-tan-light: theme('colors.pptx.tan.light');
+$pptx-tan-dark: theme('colors.pptx.tan.dark');
+
+$pptx-blue: theme('colors.pptx.blue.DEFAULT');
+$pptx-blue-light: theme('colors.pptx.blue.light');
+$pptx-blue-dark: theme('colors.pptx.blue.dark');
+
+$pptx-green: theme('colors.pptx.green.DEFAULT');
+$pptx-green-light: theme('colors.pptx.green.light');
+$pptx-green-dark: theme('colors.pptx.green.dark');
+
+$pptx-red: theme('colors.pptx.red.DEFAULT');
+$pptx-red-light: theme('colors.pptx.red.light');
+$pptx-red-dark: theme('colors.pptx.red.dark');
+
+$pptx-magenta: theme('colors.pptx.magenta.DEFAULT');
+$pptx-magenta-light: theme('colors.pptx.magenta.light');
+$pptx-magenta-dark: theme('colors.pptx.magenta.dark');
+
+// 2. Color variables to use in "React" files' js, importing from tailwind.config.js
+// See https://stackoverflow.com/questions/52900207/how-to-use-scss-variables-into-my-react-components
+:export {
+  pptxCharcoal: $pptx-charcoal;
+  pptxCharcoalLight: $pptx-charcoal-light;
+  pptxCharcoalDark: $pptx-charcoal-dark;
+
+  pptxCream: $pptx-cream;
+  pptxCreamDark: $pptx-cream-dark;
+
+  pptxAmber: $pptx-amber;
+  pptxAmberLight: $pptx-amber-light;
+  pptxAmberDark: $pptx-amber-dark;
+
+  pptxGold: $pptx-gold;
+  pptxGoldLight: $pptx-gold-light;
+  pptxGoldDark: $pptx-gold-dark;
+
+  pptxTan: $pptx-tan;
+  pptxTanLight: $pptx-tan-light;
+  pptxTanDark: $pptx-tan-dark;
+
+  pptxBlue: $pptx-blue;
+  pptxBlueLight: $pptx-blue-light;
+  pptxBlueDark: $pptx-blue-dark;
+
+  pptxGreen: $pptx-green;
+  pptxGreenLight: $pptx-green-light;
+  pptxGreenDark: $pptx-green-dark;
+
+  pptxRed: $pptx-red;
+  pptxRedLight: $pptx-red-light;
+  pptxRedDark: $pptx-red-dark;
+
+  pptxMagenta: $pptx-magenta;
+  pptxMagentaLight: $pptx-magenta-light;
+  pptxMagentaDark: $pptx-magenta-dark;
+}

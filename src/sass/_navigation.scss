@@ -1,0 +1,67 @@
+// Links.jsx
+.link {
+  @apply inline-flex items-center gap-1 text-sm text-pptx-gold hover:text-pptx-gold-light transition-colors;
+}
+
+// Breadcrumb.jsx
+.breadcrumb-sep {
+  @apply text-pptx-tan-dark;
+}
+
+.breadcrumb-current {
+  @apply text-pptx-cream;
+}
+
+.breadcrumb-link {
+  @apply text-pptx-tan hover:text-pptx-cream transition-colors;
+}
+
+// Pagination.jsx
+.page-nav-btn {
+  @apply px-2.5 py-1 rounded-lg text-sm text-pptx-tan hover:text-pptx-cream;
+  @apply disabled:opacity-30 disabled:cursor-not-allowed transition-colors;
+}
+
+.page-num-btn {
+  @apply w-8 h-8 rounded-lg text-sm transition-all text-pptx-tan;
+
+  &:hover {
+    @apply text-pptx-cream;
+  }
+
+  &.active {
+    @apply bg-pptx-blue text-pptx-cream-dark shadow-[inset_0_0_6px_rgba(0,0,0,0.7)];
+  }
+}
+
+// Tabs.jsx
+.tabs-list {
+  @apply flex gap-1 bg-pptx-charcoal-dark rounded-xl p-1 w-fit;
+}
+
+.tab-btn {
+  @apply px-4 py-1.5 rounded-lg text-sm font-light transition-all text-pptx-tan;
+
+  &:hover {
+    @apply text-pptx-cream;
+  }
+
+  &.active {
+    @apply bg-pptx-blue text-pptx-cream-dark [text-shadow:0_1px_1px_rgba(0,0,0,0.4)];
+    @apply shadow-[inset_0_0_8px_rgba(0,0,0,0.8),0_0_12px_rgba(0,80,140,0.35)];
+  }
+}
+
+// Accordion.jsx
+.accordion-item {
+  @apply rounded-xl border border-pptx-blue/15 overflow-hidden;
+}
+
+.accordion-header {
+  @apply w-full flex items-center justify-between px-4 py-3 text-left text-pptx-cream;
+  @apply bg-pptx-charcoal-dark hover:bg-pptx-charcoal-light transition-colors;
+}
+
+.accordion-panel {
+  @apply px-4 py-3 text-sm text-pptx-tan bg-pptx-charcoal;
+}

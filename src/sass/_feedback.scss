@@ -1,0 +1,85 @@
+// Alert.jsx
+.alert {
+  @apply flex items-start gap-3 rounded-xl border px-4 py-3;
+
+  &.alert-info {
+    @apply bg-pptx-blue/15 border-pptx-blue/50;
+  }
+  &.alert-warning {
+    @apply bg-pptx-amber/15 border-pptx-amber/50;
+  }
+  &.alert-critical {
+    @apply bg-pptx-red/15 border-pptx-red/50;
+  }
+  &.alert-success {
+    @apply bg-pptx-green/15 border-pptx-green-light/50;
+  }
+}
+
+.alert-title {
+  @apply text-pptx-cream font-normal mb-0.5;
+}
+
+.alert-body {
+  @apply text-sm text-pptx-tan;
+}
+
+.alert-dismiss {
+  @apply text-pptx-tan hover:text-pptx-cream transition-colors leading-none text-lg;
+}
+
+// Badge.jsx
+.badge {
+  @apply inline-block px-2.5 py-0.5 rounded-lg text-xs font-normal;
+
+  &.badge-info {
+    @apply bg-pptx-blue text-pptx-cream shadow-[0_0_10px_rgba(0,80,140,0.5)];
+  }
+  &.badge-warning {
+    @apply bg-pptx-amber text-pptx-charcoal shadow-[0_0_10px_rgba(255,119,0,0.5)];
+  }
+  &.badge-critical {
+    @apply bg-pptx-red text-pptx-cream shadow-[0_0_10px_rgba(147,21,21,0.5)];
+  }
+  &.badge-success {
+    @apply bg-pptx-green text-pptx-cream shadow-[0_0_10px_rgba(23,130,77,0.5)];
+  }
+  &.badge-neutral {
+    @apply bg-pptx-tan text-pptx-charcoal;
+  }
+}
+
+// Spinner.jsx
+.spinner {
+  @apply inline-block rounded-full border-pptx-amber/25 border-t-pptx-amber animate-spin;
+
+  &.spinner-sm {
+    @apply w-4 h-4 border-2;
+  }
+  &.spinner-md {
+    @apply w-6 h-6 border-[3px];
+  }
+  &.spinner-lg {
+    @apply w-10 h-10 border-4;
+  }
+}
+
+// ProgressBar.jsx
+.progress-label-row {
+  @apply flex justify-between text-xs text-pptx-tan mb-1;
+}
+
+.progress-track {
+  @apply w-full h-2 rounded-lg bg-pptx-charcoal-dark shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full rounded-lg bg-pptx-amber shadow-[0_0_8px_rgba(255,119,0,0.6)] transition-all w-[var(--pptx-progress)];
+}
+
+// Tooltip.jsx
+.tooltip-bubble {
+  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap rounded-lg;
+  @apply bg-pptx-charcoal-dark border border-pptx-blue/30 px-2.5 py-1 text-xs text-pptx-cream;
+  @apply shadow-[0_0_12px_rgba(0,80,140,0.35)] z-10;
+}

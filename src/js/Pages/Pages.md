@@ -1,0 +1,1 @@
+All pages will be here. They use the Layouts. TermsOfUse.jsx for example will be in the root of the Pages folder.

@@ -1,0 +1,21 @@
+// Modal.jsx
+.modal-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4;
+}
+
+.modal-panel {
+  @apply w-full max-w-md bg-pptx-charcoal-light border border-pptx-blue/20 rounded-3xl p-6;
+  @apply shadow-[0_0_40px_rgba(0,80,140,0.2)];
+}
+
+.modal-title {
+  @apply text-pptx-gold text-lg font-extralight tracking-wide;
+}
+
+.modal-close {
+  @apply text-pptx-tan hover:text-pptx-cream transition-colors leading-none text-xl;
+}
+
+.modal-body {
+  @apply text-pptx-cream text-sm mb-6;
+}

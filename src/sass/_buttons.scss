@@ -1,0 +1,120 @@
+// Rectangular buttons (Button.jsx) — pill-shaped, non-square
+.btn {
+  @apply font-sans font-light transition-all;
+  @apply disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none;
+
+  &.toggleable {
+    @apply border-4 border-transparent;
+  }
+
+  &.btn-md {
+    @apply px-5 py-2.5 text-base rounded-xl;
+  }
+
+  &.btn-sm {
+    @apply px-3 py-1.5 text-sm rounded-lg;
+  }
+
+  &.btn-primary {
+    @apply bg-pptx-blue hover:bg-pptx-blue-light active:bg-pptx-blue-dark text-pptx-cream;
+    @apply shadow-[0_0_16px_rgba(0,80,140,0.45)] hover:shadow-[0_0_24px_rgba(0,80,140,0.65)] active:shadow-[inset_0_3px_10px_rgba(0,0,0,0.7)];
+
+    &.toggleable {
+      @apply border-pptx-blue-light/60 hover:bg-pptx-blue active:bg-pptx-blue;
+      @apply hover:shadow-[0_0_28px_rgba(0,80,140,0.8)] active:shadow-[0_0_28px_rgba(0,80,140,0.8)];
+
+      &.selected {
+        @apply border-pptx-blue-dark/60 bg-pptx-blue-dark text-pptx-cream-dark;
+        @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+      }
+    }
+  }
+
+  &.btn-secondary {
+    @apply bg-pptx-tan hover:bg-pptx-tan-light active:bg-pptx-tan-dark text-pptx-charcoal;
+    @apply shadow-[0_0_16px_rgba(122,140,163,0.45)] hover:shadow-[0_0_24px_rgba(122,140,163,0.65)] active:shadow-[inset_0_2px_2px_rgba(0,0,0,0.6)];
+
+    &.toggleable {
+      @apply border-pptx-tan-light/60 hover:bg-pptx-tan active:bg-pptx-tan;
+      @apply hover:shadow-[0_0_28px_rgba(122,140,163,0.7)] active:shadow-[0_0_28px_rgba(122,140,163,0.7)];
+
+      &.selected {
+        @apply border-pptx-tan-dark/60 bg-pptx-tan-dark text-pptx-charcoal-dark;
+        @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.6)];
+      }
+    }
+  }
+
+  &.btn-danger {
+    @apply bg-pptx-red hover:bg-pptx-red-light active:bg-pptx-red-dark text-pptx-cream;
+    @apply shadow-[0_0_16px_rgba(147,21,21,0.45)] hover:shadow-[0_0_24px_rgba(147,21,21,0.65)] active:shadow-[inset_0_3px_10px_rgba(0,0,0,0.7)];
+
+    &.toggleable {
+      @apply border-pptx-red-light/60 hover:bg-pptx-red active:bg-pptx-red;
+      @apply hover:shadow-[0_0_28px_rgba(147,21,21,0.8)] active:shadow-[0_0_28px_rgba(147,21,21,0.8)];
+
+      &.selected {
+        @apply border-pptx-red-dark/60 bg-pptx-red-dark text-pptx-cream-dark;
+        @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+      }
+    }
+  }
+}
+
+// Square toggle buttons (SquareButton.jsx)
+.square-btn {
+  @apply h-24 w-24 rounded-2xl border-4 font-semibold text-xs uppercase tracking-wide transition-all;
+  @apply disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none;
+
+  &.square-btn-primary {
+    @apply bg-pptx-blue border-pptx-blue-light/60 text-pptx-cream;
+    @apply shadow-[0_0_20px_rgba(0,80,140,0.6)] hover:shadow-[0_0_28px_rgba(0,80,140,0.8)];
+
+    &.selected {
+      @apply bg-pptx-blue-dark border-pptx-blue-dark/60 text-pptx-cream-dark;
+      @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+    }
+  }
+
+  &.square-btn-secondary {
+    @apply bg-pptx-tan border-pptx-tan-light/60 text-pptx-charcoal;
+    @apply shadow-[0_0_20px_rgba(122,140,163,0.5)] hover:shadow-[0_0_28px_rgba(122,140,163,0.7)];
+
+    &.selected {
+      @apply bg-pptx-tan-dark border-pptx-tan-dark/60 text-pptx-charcoal-dark;
+      @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.6)];
+    }
+  }
+
+  &.square-btn-success {
+    @apply bg-pptx-green border-pptx-green-light/60 text-pptx-cream;
+    @apply shadow-[0_0_20px_rgba(23,130,77,0.6)] hover:shadow-[0_0_28px_rgba(23,130,77,0.8)];
+
+    &.selected {
+      @apply bg-pptx-green-dark border-pptx-green-dark/60 text-pptx-cream-dark;
+      @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+    }
+  }
+
+  &.square-btn-danger {
+    @apply bg-pptx-red border-pptx-red-light/60 text-pptx-cream;
+    @apply shadow-[0_0_20px_rgba(147,21,21,0.6)] hover:shadow-[0_0_28px_rgba(147,21,21,0.8)];
+
+    &.selected {
+      @apply bg-pptx-red-dark border-pptx-red-dark/60 text-pptx-cream-dark;
+      @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+    }
+  }
+}
+
+// Emergency-stop latching button (EStopButton.jsx)
+.estop-btn {
+  @apply h-24 w-24 rounded-full border-4 font-semibold text-xs uppercase tracking-wide transition-all;
+  @apply bg-pptx-red border-pptx-red-light/60 text-pptx-cream;
+  @apply shadow-[0_0_20px_rgba(147,21,21,0.6)] hover:shadow-[0_0_28px_rgba(147,21,21,0.8)] active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+
+  &.engaged {
+    @apply bg-pptx-red-dark border-pptx-red-dark/60 text-pptx-cream-dark;
+    @apply shadow-[inset_0_4px_10px_rgba(0,0,0,0.7)];
+  }
+}
