@@ -1,4 +1,6 @@
 // Sass entry point — @tailwind directives + body base styles remain in src/css/index.css
+@reference '../css/index.css';
+
 @import 'color_variables.module';
 @import 'typography';
 @import 'buttons';

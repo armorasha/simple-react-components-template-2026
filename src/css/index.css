@@ -1,6 +1,43 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Ubuntu, "Noto Sans", "Liberation Sans", "DejaVu Sans", Arial, sans-serif;
+
+  --color-pptx-charcoal: #0e0e0e;
+  --color-pptx-charcoal-light: #1a1a1e;
+  --color-pptx-charcoal-dark: #050505;
+
+  --color-pptx-cream: #e6edf7;
+  --color-pptx-cream-dark: #aab4c2;
+
+  --color-pptx-amber: #ff7700;
+  --color-pptx-amber-light: #ff9b40;
+  --color-pptx-amber-dark: #cc5f00;
+
+  --color-pptx-gold: #fab400;
+  --color-pptx-gold-light: #fdc74a;
+  --color-pptx-gold-dark: #c89000;
+
+  --color-pptx-tan: #7a8ca3;
+  --color-pptx-tan-light: #9db0c7;
+  --color-pptx-tan-dark: #5a6a7d;
+
+  --color-pptx-blue: #00508c;
+  --color-pptx-blue-light: #1670b0;
+  --color-pptx-blue-dark: #003a66;
+
+  --color-pptx-green: #17824d;
+  --color-pptx-green-light: #20b66b;
+  --color-pptx-green-dark: #0f5733;
+
+  --color-pptx-red: #931515;
+  --color-pptx-red-light: #c91d1d;
+  --color-pptx-red-dark: #670f0f;
+
+  --color-pptx-magenta: #ff4dd8;
+  --color-pptx-magenta-light: #ff80e0;
+  --color-pptx-magenta-dark: #cc22aa;
+}
 
 body {
   @apply bg-pptx-charcoal text-pptx-cream font-sans font-extralight;

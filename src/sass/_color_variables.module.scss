@@ -1,38 +1,40 @@
-// 1. Color variables to use in "SCSS" files, importing from tailwind.config.js
-$pptx-charcoal: theme('colors.pptx.charcoal.DEFAULT');
-$pptx-charcoal-light: theme('colors.pptx.charcoal.light');
-$pptx-charcoal-dark: theme('colors.pptx.charcoal.dark');
+// 1. Color variables to use in "SCSS" files, importing from the @theme block in src/css/index.css
+@reference '../css/index.css';
 
-$pptx-cream: theme('colors.pptx.cream.DEFAULT');
-$pptx-cream-dark: theme('colors.pptx.cream.dark');
+$pptx-charcoal: theme('--color-pptx-charcoal');
+$pptx-charcoal-light: theme('--color-pptx-charcoal-light');
+$pptx-charcoal-dark: theme('--color-pptx-charcoal-dark');
 
-$pptx-amber: theme('colors.pptx.amber.DEFAULT');
-$pptx-amber-light: theme('colors.pptx.amber.light');
-$pptx-amber-dark: theme('colors.pptx.amber.dark');
+$pptx-cream: theme('--color-pptx-cream');
+$pptx-cream-dark: theme('--color-pptx-cream-dark');
 
-$pptx-gold: theme('colors.pptx.gold.DEFAULT');
-$pptx-gold-light: theme('colors.pptx.gold.light');
-$pptx-gold-dark: theme('colors.pptx.gold.dark');
+$pptx-amber: theme('--color-pptx-amber');
+$pptx-amber-light: theme('--color-pptx-amber-light');
+$pptx-amber-dark: theme('--color-pptx-amber-dark');
 
-$pptx-tan: theme('colors.pptx.tan.DEFAULT');
-$pptx-tan-light: theme('colors.pptx.tan.light');
-$pptx-tan-dark: theme('colors.pptx.tan.dark');
+$pptx-gold: theme('--color-pptx-gold');
+$pptx-gold-light: theme('--color-pptx-gold-light');
+$pptx-gold-dark: theme('--color-pptx-gold-dark');
 
-$pptx-blue: theme('colors.pptx.blue.DEFAULT');
-$pptx-blue-light: theme('colors.pptx.blue.light');
-$pptx-blue-dark: theme('colors.pptx.blue.dark');
+$pptx-tan: theme('--color-pptx-tan');
+$pptx-tan-light: theme('--color-pptx-tan-light');
+$pptx-tan-dark: theme('--color-pptx-tan-dark');
 
-$pptx-green: theme('colors.pptx.green.DEFAULT');
-$pptx-green-light: theme('colors.pptx.green.light');
-$pptx-green-dark: theme('colors.pptx.green.dark');
+$pptx-blue: theme('--color-pptx-blue');
+$pptx-blue-light: theme('--color-pptx-blue-light');
+$pptx-blue-dark: theme('--color-pptx-blue-dark');
 
-$pptx-red: theme('colors.pptx.red.DEFAULT');
-$pptx-red-light: theme('colors.pptx.red.light');
-$pptx-red-dark: theme('colors.pptx.red.dark');
+$pptx-green: theme('--color-pptx-green');
+$pptx-green-light: theme('--color-pptx-green-light');
+$pptx-green-dark: theme('--color-pptx-green-dark');
 
-$pptx-magenta: theme('colors.pptx.magenta.DEFAULT');
-$pptx-magenta-light: theme('colors.pptx.magenta.light');
-$pptx-magenta-dark: theme('colors.pptx.magenta.dark');
+$pptx-red: theme('--color-pptx-red');
+$pptx-red-light: theme('--color-pptx-red-light');
+$pptx-red-dark: theme('--color-pptx-red-dark');
+
+$pptx-magenta: theme('--color-pptx-magenta');
+$pptx-magenta-light: theme('--color-pptx-magenta-light');
+$pptx-magenta-dark: theme('--color-pptx-magenta-dark');
 
 // 2. Color variables to use in "React" files' js, importing from tailwind.config.js
 // See https://stackoverflow.com/questions/52900207/how-to-use-scss-variables-into-my-react-components
