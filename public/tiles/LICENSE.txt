@@ -1,0 +1,28 @@
+Basemap tiles in this directory
+================================
+
+Source data: Natural Earth (1:50m Cultural/Physical Vectors, "land" theme)
+https://www.naturalearthdata.com/downloads/50m-physical-vectors/
+
+License: Public Domain
+https://www.naturalearthdata.com/about/terms-of-use/
+
+  "All versions of Natural Earth raster + vector map data found on this
+  website are in the public domain. You may use the maps in any manner,
+  including modifying the content and design, electronic dissemination,
+  and offset printing. The primary authors, Tom Patterson and Nathaniel
+  Vaughn Kelso, and all other contributors reserve no rights and no
+  attribution is required."
+
+No attribution required; safe for commercial use.
+
+These PNG tiles are not distributed by Natural Earth directly — they were
+rendered from Natural Earth's public-domain land-polygon vector data by
+this project's own script, scripts/render_tiles.py. That script (and its
+rendering) inherits the same public-domain status as the source data.
+
+Note: Natural Earth's public-domain status is unconditional for the
+"land" theme used here. A small number of other Natural Earth themes
+(Admin-1 boundaries, Marine Boundaries) carry additional licensing
+caveats outside the U.S. due to third-party data dependencies — those
+themes are not used by this project's tiles.

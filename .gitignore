@@ -83,3 +83,8 @@ desktop.ini
 
 # User files
 my_TODO.md
+
+# Tile generation tooling — only the rendered tiles in public/tiles/ get committed, not the script that made them
+scripts/prepare_offline_tiles_for_deckgl.py
+scripts/cartopy_natural_earth_download_notes.md
+public/tiles/manifest.json

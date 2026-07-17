@@ -5,8 +5,13 @@ Dark-themed React + Tailwind component style guide page with some standard React
 ## Run
 
 ```
+cp .env.example .env
 docker compose up
 ```
+
+`.env` is gitignored and `docker-compose.yml` requires it (`env_file: .env`) —
+skip the `cp` and `docker compose up` fails immediately with `env file .env
+not found`, before the container even starts.
 
 Visit http://style-guide-2026.local:3000 (or http://localhost:3000).
 
