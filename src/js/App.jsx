@@ -36,6 +36,9 @@ export default function App() {
   const [topPrimarySelected, setTopPrimarySelected] = useState(true);
   const [topSecondarySelected, setTopSecondarySelected] = useState(true);
   const [topDangerSelected, setTopDangerSelected] = useState(true);
+  const [topPrimarySelectedSm, setTopPrimarySelectedSm] = useState(true);
+  const [topSecondarySelectedSm, setTopSecondarySelectedSm] = useState(true);
+  const [topDangerSelectedSm, setTopDangerSelectedSm] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [dangerModalOpen, setDangerModalOpen] = useState(false);
@@ -91,24 +94,24 @@ export default function App() {
           <Button
             variant="primary"
             size="sm"
-            selected={topPrimarySelected}
-            onClick={() => setTopPrimarySelected((v) => !v)}
+            selected={topPrimarySelectedSm}
+            onClick={() => setTopPrimarySelectedSm((v) => !v)}
           >
             Primary
           </Button>
           <Button
             variant="secondary"
             size="sm"
-            selected={topSecondarySelected}
-            onClick={() => setTopSecondarySelected((v) => !v)}
+            selected={topSecondarySelectedSm}
+            onClick={() => setTopSecondarySelectedSm((v) => !v)}
           >
             Secondary
           </Button>
           <Button
             variant="danger"
             size="sm"
-            selected={topDangerSelected}
-            onClick={() => setTopDangerSelected((v) => !v)}
+            selected={topDangerSelectedSm}
+            onClick={() => setTopDangerSelectedSm((v) => !v)}
           >
             Danger
           </Button>
