@@ -59,6 +59,11 @@ export default function App() {
           <Button variant="secondary">Secondary</Button>
           <Button variant="danger">Danger</Button>
         </div>
+        <div className="flex gap-2 flex-wrap mt-2">
+          <Button variant="primary" size="sm">Primary</Button>
+          <Button variant="secondary" size="sm">Secondary</Button>
+          <Button variant="danger" size="sm">Danger</Button>
+        </div>
 
         <Muted>
           <span className="mt-6 block text-xs uppercase tracking-wide">Click to toggle</span>
@@ -82,6 +87,32 @@ export default function App() {
             Danger
           </Button>
         </div>
+        <div className="flex gap-2 flex-wrap mt-2">
+          <Button
+            variant="primary"
+            size="sm"
+            selected={topPrimarySelected}
+            onClick={() => setTopPrimarySelected((v) => !v)}
+          >
+            Primary
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            selected={topSecondarySelected}
+            onClick={() => setTopSecondarySelected((v) => !v)}
+          >
+            Secondary
+          </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            selected={topDangerSelected}
+            onClick={() => setTopDangerSelected((v) => !v)}
+          >
+            Danger
+          </Button>
+        </div>
 
         <Muted>
           <span className="mt-6 block text-xs uppercase tracking-wide">Disabled</span>
@@ -96,6 +127,18 @@ export default function App() {
           <Button variant="danger" size="sm" disabled>
             Disabled
           </Button>
+        </div>
+
+        <Muted>
+          <span className="mt-6 block text-xs uppercase tracking-wide">Outline</span>
+        </Muted>
+        <div className="flex gap-3 flex-wrap mt-2">
+          <Button variant="outline-primary">Primary</Button>
+          <Button variant="outline-secondary">Secondary</Button>
+        </div>
+        <div className="flex gap-2 flex-wrap mt-2">
+          <Button variant="outline-primary" size="sm">Primary</Button>
+          <Button variant="outline-secondary" size="sm">Secondary</Button>
         </div>
       </Card>
 
