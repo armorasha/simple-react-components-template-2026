@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -41,6 +42,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    // Bakes ACTIVE_BASEMAP from the container's env (see .env / .env.example)
+    // into the client bundle as process.env.ACTIVE_BASEMAP. Falls back to
+    // 'natural_earth' when the var isn't set, so a build without a .env
+    // still works instead of shipping 'undefined'.
+    new webpack.EnvironmentPlugin({
+      ACTIVE_BASEMAP: 'natural_earth',
     }),
   ],
   devServer: {
