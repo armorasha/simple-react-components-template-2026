@@ -28,6 +28,7 @@ import Breadcrumb from './Components/Breadcrumb';
 import Pagination from './Components/Pagination';
 import { Heading1, Heading2, Body, Muted } from './Components/Typography';
 import DeckLineLayerMap from './Components/DeckLineLayerMap';
+import BackendStatus from "../components/BackendStatus";
 import Select2 from './Components/Select2';
 import DefaultLayout from './Layouts/DefaultLayout';
 
@@ -55,6 +56,10 @@ export default function App() {
           Login page
         </Links>
       </header>
+
+      <Card title="Backend">
+        <BackendStatus />
+      </Card>
 
       <Card title="Buttons">
         <div className="flex gap-3 flex-wrap">
