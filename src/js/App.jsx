@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Links from './Components/Links';
 import Button from './Components/Button';
 import TextInput from './Components/TextInput';
@@ -28,11 +28,59 @@ import Breadcrumb from './Components/Breadcrumb';
 import Pagination from './Components/Pagination';
 import { Heading1, Heading2, Body, Muted } from './Components/Typography';
 import DeckLineLayerMap from './Components/deckgl/DeckLineLayerMap';
+import DeckLineLayerMapAdv from './Components/deckgl/DeckLineLayerMapAdv';
 import BackendStatus from "./Components/BackendStatus";
 import Select2 from './Components/Select2';
 import DefaultLayout from './Layouts/DefaultLayout';
+import {
+  FULL_STRIDE1_CONFIG_URL,
+  FULL_STRIDE1_PARAMETERS_URL,
+  FULL_STRIDE1_VIEW_STATE_URL,
+} from './Components/deckgl/_deck-line-layer-map-adv/endpoints';
 
 export default function App() {
+  // view state / render tuning for the Adv map's full_stride1 dataset, fetched
+  // from the backend rather than hardcoded — this page has no router loader
+  // like a full app would, so it's just a plain effect on mount. No auth
+  // header, unlike where this pattern's ported from: nothing in this repo
+  // gates these routes behind a token.
+  const [advViewState, setAdvViewState] = useState(null);
+  const [advRenderParameters, setAdvRenderParameters] = useState({});
+  const [advConfig, setAdvConfig] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([
+      fetch(FULL_STRIDE1_VIEW_STATE_URL).then((res) => res.json()),
+      fetch(FULL_STRIDE1_PARAMETERS_URL).then((res) => res.json()),
+      fetch(FULL_STRIDE1_CONFIG_URL).then((res) => res.json()),
+    ])
+      .then(([viewState, renderParameters, config]) => {
+        if (cancelled) {
+          return;
+        }
+        setAdvViewState(viewState);
+        setAdvRenderParameters(renderParameters);
+        setAdvConfig(config);
+      })
+      .catch(() => {
+        // Backend not present yet (e.g. this component running standalone
+        // without its dataset app) — map card just stays on the loading
+        // placeholder instead of throwing.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // deck.gl's initialViewState needs real finite numbers the moment it
+  // mounts — rendering with null/NaN before the fetch resolves would break
+  // deck.gl outright, not just look wrong.
+  const hasValidAdvViewState =
+    Number.isFinite(advViewState?.longitude) &&
+    Number.isFinite(advViewState?.latitude) &&
+    Number.isFinite(advViewState?.zoom);
+
   const [toggleOn, setToggleOn] = useState(true);
   const [topPrimarySelected, setTopPrimarySelected] = useState(true);
   const [topSecondarySelected, setTopSecondarySelected] = useState(true);
@@ -312,6 +360,29 @@ export default function App() {
 
       <Card title="Map — LineLayer (deck.gl)">
         <DeckLineLayerMap />
+      </Card>
+
+      <Card title="Map — LineLayer Adv (deck.gl + Channels WebSocket)">
+        {/* The component is generic: which region to look at and how the
+            dataset renders are this page's choice, not its own — all three
+            come from the backend's full_stride1 dataset files rather than
+            being hardcoded here, so this card starts working the moment that
+            backend exists, no frontend changes needed. Height lives here
+            too, since DeckLineLayerMapAdv takes its size from className. */}
+        {hasValidAdvViewState ? (
+          <div className="relative w-full h-[720px]">
+            <DeckLineLayerMapAdv
+              className="w-full h-full"
+              initialViewState={advViewState}
+              renderParameters={advRenderParameters}
+              config={advConfig}
+            />
+          </div>
+        ) : (
+          <div className="relative w-full h-[720px] rounded-2xl overflow-hidden border border-pptx-blue/30 shadow-[0_0_30px_rgba(0,80,140,0.15)] flex items-center justify-center">
+            <span className="text-white/70 text-sm">Loading map…</span>
+          </div>
+        )}
       </Card>
 
       <Card title="Alerts">
