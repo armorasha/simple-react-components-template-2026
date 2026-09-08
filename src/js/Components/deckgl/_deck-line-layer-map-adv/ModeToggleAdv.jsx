@@ -5,6 +5,7 @@ export default function ModeToggleAdv({ mode, onModeChange }) {
   const modes = [
     { key: "historic", label: "Historic" },
     { key: "historic-live", label: "Historic Live" },
+    { key: "live", label: "Live" },
   ];
   return (
     <div className="flex gap-1 bg-black/40 rounded-lg p-1">

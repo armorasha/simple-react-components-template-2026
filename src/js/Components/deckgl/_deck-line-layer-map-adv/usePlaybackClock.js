@@ -4,13 +4,15 @@ const TICK_MS = 150;
 
 // the single simulated clock, and the only one in the system. knows nothing
 // about segments, WebSockets or modes beyond whether it should be ticking —
-// Historic passes ticking: false and never advances, Historic-Live ticks.
+// Historic passes ticking: false and never advances, Historic-Live and Live
+// share the same ticker.
 //
 // values are mirrored into refs because the interval callback is long-lived
 // and would otherwise close over stale state from whichever render created it
 //
-// atEnd: "clamp" is unused right now — it's for an open-ended stream whose
-// window keeps growing with nothing to loop back to
+// atEnd is what happens on reaching the window end — Historic-Live loops a
+// bounded replay, Live clamps because its window only grows forward and there
+// is nothing to loop back to
 export default function usePlaybackClock({ ticking, atEnd = "loop" }) {
   const [simTime, setSimTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);

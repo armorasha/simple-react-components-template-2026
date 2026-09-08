@@ -26,3 +26,9 @@ const FULL_STRIDE1_BASE = `${API_BASE_URL}/backend_assets/deckgl/line-layer-adv/
 export const FULL_STRIDE1_VIEW_STATE_URL = `${FULL_STRIDE1_BASE}/view-state.json`;
 export const FULL_STRIDE1_PARAMETERS_URL = `${FULL_STRIDE1_BASE}/parameters.json`;
 export const FULL_STRIDE1_CONFIG_URL = `${FULL_STRIDE1_BASE}/config.json`;
+
+// start/stop/status for the backend's test sensor, behind Legend's button in
+// Live mode
+export const SENSOR_SIM_STATUS_URL = `${API_BASE_URL}/api/sensor-sim/status/`;
+export const SENSOR_SIM_START_URL = `${API_BASE_URL}/api/sensor-sim/start/`;
+export const SENSOR_SIM_STOP_URL = `${API_BASE_URL}/api/sensor-sim/stop/`;

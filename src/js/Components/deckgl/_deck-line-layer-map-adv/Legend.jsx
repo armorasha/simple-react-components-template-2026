@@ -21,6 +21,8 @@ export default function Legend({
   wsStatus,
   loading,
   dataError,
+  simRunning,
+  onToggleSim,
 }) {
   // loading is data-level (an in-flight or still-paging chunk fetch),
   // separate from wsStatus's socket-level state — an open socket can still
@@ -35,10 +37,9 @@ export default function Legend({
           closed: { status: "critical", label: "WS: closed" },
         }[wsStatus] ?? { status: "neutral", label: `WS: ${wsStatus}` });
 
-  // Legend is never told the mode; it just checks whether it was actually
-  // handed something to act on. When the caller omits the change handlers,
-  // there's nothing here to wire up, so the whole file-picker block is
-  // skipped.
+  // Live has no variant/date/window concept. Rather than be told the mode,
+  // Legend checks what it was handed — no change handlers means nothing to
+  // wire up, so the file-picker block is skipped.
   const showFileSelectors = !!onVariantChange;
 
   // Same convention: only Historic hands over window handlers, so their
@@ -51,6 +52,17 @@ export default function Legend({
   return (
     <div className="absolute top-4 left-4 z-10 bg-black/60 backdrop-blur rounded-xl p-4 w-64 text-white space-y-3 pointer-events-auto">
       <StatusLight status={wsIndicator.status}>{wsIndicator.label}</StatusLight>
+      {onToggleSim && (
+        <button
+          type="button"
+          onClick={onToggleSim}
+          className={`w-full text-xs px-2 py-1 rounded ${
+            simRunning ? "bg-pptx-blue text-white" : "bg-white/10 text-white/70 hover:text-white"
+          }`}
+        >
+          {simRunning ? "Stop test flight" : "Start test flight"}
+        </button>
+      )}
       {showFileSelectors && (
         <>
           <Select

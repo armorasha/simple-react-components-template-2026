@@ -4,10 +4,13 @@ const RECONNECT_MS = 3000;
 const MAX_RETRIES = 5;
 
 // owns the WebSocket connection, the variant/date selection, and the
-// bounds/chunk wire protocol. no window arithmetic here — bounds come
-// straight off the server's "bounds" reply, a fetch range is just
+// bounds/chunk/live_data wire protocol. no window arithmetic here — bounds
+// come straight off the server's "bounds" reply, a fetch range is just
 // [t_from, t_to) on the "chunk" request
-export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChunk }) {
+//
+// Live has no variant/date/bounds concept at all — it's a real-time,
+// cursor-based push (~1/s), so it keeps a separate onLiveData callback
+export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChunk, onLiveData }) {
   const [wsStatus, setWsStatus] = useState("connecting");
   const [variants, setVariants] = useState([]);
   const [variant, setVariant] = useState(null);
@@ -27,6 +30,7 @@ export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChun
   const modeRef = useRef(mode);
   const onBoundsRef = useRef(onBounds);
   const onChunkRef = useRef(onChunk);
+  const onLiveDataRef = useRef(onLiveData);
 
   useEffect(() => {
     variantRef.current = variant;
@@ -43,6 +47,9 @@ export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChun
   useEffect(() => {
     onChunkRef.current = onChunk;
   }, [onChunk]);
+  useEffect(() => {
+    onLiveDataRef.current = onLiveData;
+  }, [onLiveData]);
 
   // WebSocket lifecycle — connect once, reconnect on close.
   useEffect(() => {
@@ -85,10 +92,26 @@ export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChun
           }
         } else if (msg.type === "bounds") {
           setDataError(null);
-          onBoundsRef.current?.({ start: msg.start_t, end: msg.end_t, count: msg.count });
+          onBoundsRef.current?.({
+            start: msg.start_t,
+            end: msg.end_t,
+            count: msg.count,
+          });
         } else if (msg.type === "chunk") {
           setDataError(null);
           onChunkRef.current?.(msg);
+        } else if (msg.type === "live_data") {
+          // The backend only learns to stop pushing on its next message, so a
+          // switch away from Live can race one last frame in. Dropped rather
+          // than merged into a buffer the new mode just reset.
+          if (modeRef.current !== "live") {
+            return;
+          }
+          setDataError(null);
+          onLiveDataRef.current?.({
+            normal: msg.normal || [],
+            flagged: msg.flagged || [],
+          });
         } else if (msg.type === "error") {
           setDataError(msg.message || "Unknown error");
         }
@@ -120,21 +143,31 @@ export default function useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChun
 
   // Drives the historic/HL file picker: a new variant invalidates the
   // current date, so the date list is re-requested before anything is
-  // fetched against it.
+  // fetched against it. Live has no variant/date concept, so this must never
+  // fire there — it would blank the picker state the other modes come back to.
   useEffect(() => {
     const ws = wsRef.current;
-    if (ws && ws.readyState === WebSocket.OPEN && variant) {
+    if (ws && ws.readyState === WebSocket.OPEN && variant && mode !== "live") {
       setDate(null);
       ws.send(JSON.stringify({ type: "dates", variant }));
     }
   }, [variant, mode]);
+
+  // Live asks once and then listens — no bounds, no paging, the server
+  // decides when there's something to send.
+  useEffect(() => {
+    const ws = wsRef.current;
+    if (ws && ws.readyState === WebSocket.OPEN && mode === "live") {
+      ws.send(JSON.stringify({ type: "request", mode: "live" }));
+    }
+  }, [mode]);
 
   // Bounds request, re-sent whenever variant/date/mode settle on a fetchable
   // selection. Historic and Historic-Live both need bounds — Historic to
   // know the dataset's full span, HL to know the scrubber's range.
   useEffect(() => {
     const ws = wsRef.current;
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
+    if (!ws || ws.readyState !== WebSocket.OPEN || mode === "live") {
       return;
     }
     if (variant && date) {

@@ -31,7 +31,7 @@ export default function buildFlightLayers({ flights, mode, simTime, zoom, maxAlt
   });
   // Color/opacity still branch on historic vs. non-historic — Historic keeps
   // its flat altitude-gradient look even though its data now comes from the
-  // same pipeline as HL (a deliberate choice: unifying the data path doesn't
+  // same pipeline as HL/Live (a deliberate choice: unifying the data path doesn't
   // have to unify the visual style too).
   const isPlaybackMode = mode !== "historic";
 

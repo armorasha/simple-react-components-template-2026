@@ -10,19 +10,21 @@ import { getTooltip } from "./_deck-line-layer-map-adv/tooltip";
 import useFlightMapAdvWebSocket from "./_deck-line-layer-map-adv/useFlightMapAdvWebSocket";
 import usePlaybackClock from "./_deck-line-layer-map-adv/usePlaybackClock";
 import usePrefetch from "./_deck-line-layer-map-adv/usePrefetch";
-import useSegmentBuffer from "./_deck-line-layer-map-adv/useSegmentBuffer";
+import useSegmentBuffer, { FADE_S } from "./_deck-line-layer-map-adv/useSegmentBuffer";
+import useSimControl from "./_deck-line-layer-map-adv/useSimControl";
 import useViewControls from "./_deck-line-layer-map-adv/useViewControls";
 import { HomeButton, NorthButton, TwoDButton } from "./_deck-line-layer-map-adv/ViewControlButtons";
 import ViewOverlays from "./_deck-line-layer-map-adv/ViewOverlays";
 import CursorTooltip from "../CursorTooltip";
 
-// self-contained deck.gl flight-map component. both modes share one
+// self-contained deck.gl flight-map component. all three modes share one
 // pipeline — usePlaybackClock (the single simulated clock) plus
 // useSegmentBuffer (merge/evict/visible) plus usePrefetch (decides when to
 // ask the server for more) — rather than each mode keeping its own state.
 // Historic is that same pipeline with a clock that never ticks and a buffer
-// that shows everything instead of a trailing window; Historic-Live ticks
-// through a bounded window and loops at the end of it.
+// that shows everything instead of a trailing window; HL and Live both tick,
+// differing only in where their data comes from (chunk replies vs an
+// open-ended live_data push) and what happens at the end of what's known
 //
 // initialViewState is trusted to already have real, finite
 // longitude/latitude/zoom by the time this mounts, same contract as
@@ -50,14 +52,20 @@ export default function DeckLineLayerMapAdv({
   // the tooltip content be arbitrary JSX via the shared CursorTooltip
   const [hoverInfo, setHoverInfo] = useState(null);
 
-  // Historic never ticks (a static full snapshot); HL ticks and loops back
-  // to the start of its bounded window when it runs off the end.
-  const clock = usePlaybackClock({ ticking: mode !== "historic", atEnd: "loop" });
+  // Historic never ticks (a static full snapshot); HL and Live share the same
+  // clock. HL loops at the end of its bounded window, Live clamps — its window
+  // only grows forward, so there's nothing to loop back to.
+  const clock = usePlaybackClock({
+    ticking: mode !== "historic",
+    atEnd: mode === "live" ? "clamp" : "loop",
+  });
 
   // Historic's "visible" is everything up to simTime, not a trailing
   // FADE_S-second window — a static snapshot of a multi-hour dataset should
   // show all of it, not just its last 15 minutes.
-  const buffer = useSegmentBuffer({ cutoffMode: mode === "historic" ? "full" : "trailing" });
+  const buffer = useSegmentBuffer({
+    cutoffMode: mode === "historic" ? "full" : "trailing",
+  });
 
   const onBounds = useCallback(
     (b) => {
@@ -77,6 +85,28 @@ export default function DeckLineLayerMapAdv({
     [mode],
   );
 
+  // Live's clock is the sensor's — each push carries the newest real t, and
+  // nothing else should move the playhead. Collapsing bounds to that t leaves
+  // the ticker nothing to advance through; otherwise it sprints ahead at
+  // `speed` between pushes and gets yanked back once a second.
+  const onLiveData = useCallback(
+    (data) => {
+      buffer.merge(data, undefined);
+      const latestT = Math.max(
+        buffer.allRef.current.normal[buffer.allRef.current.normal.length - 1]?.t ?? -Infinity,
+        buffer.allRef.current.flagged[buffer.allRef.current.flagged.length - 1]?.t ?? -Infinity,
+      );
+      if (!Number.isFinite(latestT)) {
+        return;
+      }
+      clock.setBounds({ start: latestT, end: latestT });
+      clock.seek(latestT);
+      buffer.evictBefore(latestT - FADE_S);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [buffer],
+  );
+
   // usePrefetch needs requestChunk (from the WS hook) and the WS hook needs
   // an onChunk callback (from usePrefetch) — a ref breaks the cycle without
   // making either hook's identity unstable accross renders.
@@ -84,10 +114,10 @@ export default function DeckLineLayerMapAdv({
   const onChunk = useCallback((reply) => handleChunkReplyRef.current?.(reply), []);
 
   const { wsStatus, variants, variant, setVariant, dates, date, setDate, dataError, gaveUp, requestChunk } =
-    useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChunk });
+    useFlightMapAdvWebSocket(wsUrl, mode, { onBounds, onChunk, onLiveData });
 
   const prefetch = usePrefetch({
-    active: true,
+    active: mode !== "live",
     historic: mode === "historic",
     clock,
     buffer,
@@ -96,13 +126,14 @@ export default function DeckLineLayerMapAdv({
   });
   handleChunkReplyRef.current = prefetch.handleChunkReply;
 
-  const isLoading = wsStatus === "open" && (!variant || !date || clock.bounds.end <= clock.bounds.start);
+  const isLoading =
+    wsStatus === "open" && mode !== "live" && (!variant || !date || clock.bounds.end <= clock.bounds.start);
 
   // buffer.visible only updates when computeVisible is actually called — a
   // seek does this directly (below), but simTime otherwise advances via the
   // ticker inside usePlaybackClock, which computeVisible knows nothing
   // about. Recomputing here on every simTime change is what keeps Historic's
-  // one-shot seed and HL's per-tick advance both actually reaching the
+  // one-shot seed and HL/Live's per-tick advance both actually reaching the
   // screen.
   useEffect(() => {
     buffer.computeVisible(clock.simTime);
@@ -127,10 +158,16 @@ export default function DeckLineLayerMapAdv({
     [clock],
   );
 
+  const clearBuffer = useCallback(() => buffer.clear(), [buffer]);
+  const { simRunning, toggleSim } = useSimControl({
+    mode,
+    onStop: clearBuffer,
+  });
+
   // A new variant/date points bounds at a different dataset, and a mode
-  // switch re-reads the same one under a different cutoff — without a clear
-  // the old flights either fade out slowly (trailing cutoff) or never
-  // disappear at all ("full" cutoff).
+  // switch points at a different data source entirely (chunked fetch vs
+  // Live's push) — without a clear the old flights either fade out slowly
+  // (trailing cutoff) or never disappear at all ("full" cutoff).
   // One effect rather than three: these change together constantly, and a
   // mode switch that also changed date used to clear three times in a single
   // commit — took a while to notice that one in the render count
@@ -185,17 +222,17 @@ export default function DeckLineLayerMapAdv({
         !fullPage && "rounded-2xl border border-pptx-blue/30 shadow-[0_0_30px_rgba(0,80,140,0.15)]",
       )}
     >
-      {/* Top-left: variant/date pickers + WS status + flight counts. Legend
-          renders the file-picker block only when it actually receives values
-          and change handlers, so a mode with no variant/date concept just
-          passes nothing rather than having Legend branch on mode. */}
+      {/* Top-left: variant/date pickers + WS status + flight counts. Live has
+          no variant/date concept, and rather than pass mode down for Legend to
+          branch on, it's handed nothing to act on — no values, no handlers.
+          Legend renders the file-picker block only when it gets them. */}
       <Legend
-        variants={variants}
-        variant={variant}
-        onVariantChange={setVariant}
-        dates={dates}
-        date={date}
-        onDateChange={setDate}
+        variants={mode === "live" ? undefined : variants}
+        variant={mode === "live" ? undefined : variant}
+        onVariantChange={mode === "live" ? undefined : setVariant}
+        dates={mode === "live" ? undefined : dates}
+        date={mode === "live" ? undefined : date}
+        onDateChange={mode === "live" ? undefined : setDate}
         flightCounts={flightCounts}
         budgetReached={prefetch.budgetReached}
         loading={prefetch.loading}
@@ -207,15 +244,18 @@ export default function DeckLineLayerMapAdv({
         onNextWindow={mode === "historic" ? prefetch.goToNextWindow : undefined}
         wsStatus={wsStatus}
         dataError={dataError}
+        simRunning={mode === "live" ? simRunning : undefined}
+        onToggleSim={mode === "live" ? toggleSim : undefined}
       />
 
-      {/* Top-right: Historic / Historic-Live mode switch. */}
+      {/* Top-right: Historic / Historic-Live / Live mode switch. */}
       <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
         <ModeToggleAdv mode={mode} onModeChange={setMode} />
       </div>
 
       {/* Bottom-left: playback scrubber — Historic-Live only. Hidden in
-          Historic, where nothing ticks and there is nothing to scrub. */}
+          Historic (nothing ticks there) and in Live, where an open-ended
+          stream has no fixed window to scrub through. */}
       {mode === "historic-live" && (
         <div className="absolute bottom-4 left-4 z-10">
           <HLControls

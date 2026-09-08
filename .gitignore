@@ -39,7 +39,6 @@ desktop.ini
 
 # Editors / IDEs
 .vscode/
-!.vscode/extensions.json
 .idea/
 *.iml
 *.ipr
