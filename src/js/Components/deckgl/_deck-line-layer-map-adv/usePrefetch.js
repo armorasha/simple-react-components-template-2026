@@ -27,8 +27,8 @@ const MAX_STALLED_PAGES = 2;
 // wrong quantity, and the practical limit is deck.gl's attribute re-upload
 // cost rather than available memory anyway.
 //
-// Historic only. HL is bounded by FADE_S eviction in useSegmentBuffer, which
-// keeps their buffers to a trailing window however long a session runs;
+// Historic only. HL/Live are bounded by FADE_S eviction in useSegmentBuffer,
+// which keeps their buffers to a trailing window however long a session runs;
 // applying a total-rows cap to an open-ended stream would stop it dead
 // partway through instead of letting it keep trimming.
 //

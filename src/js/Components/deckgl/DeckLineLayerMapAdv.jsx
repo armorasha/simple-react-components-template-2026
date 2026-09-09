@@ -188,7 +188,8 @@ export default function DeckLineLayerMapAdv({
   }, [dataError]);
 
   // No selector branching between separate state variables here —
-  // buffer.visible is the one flights value for both modes.
+  // buffer.visible is the one flights value for every mode, historic and
+  // live included.
   const activeFlights = buffer.visible;
 
   const flightCounts = useMemo(

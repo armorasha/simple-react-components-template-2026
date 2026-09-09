@@ -60,7 +60,7 @@ export default function CursorTooltip({
   return (
     <span
       ref={elRef}
-      className={`${anchor === "absolute" ? "absolute" : "fixed"} z-50 pointer-events-none bg-black/80 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow-lg`}
+      className={`cursor-tooltip cursor-tooltip-${anchor}`}
       style={{ left: placement.left, top: placement.top }}
     >
       {content}

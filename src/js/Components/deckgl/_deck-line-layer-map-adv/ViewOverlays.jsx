@@ -3,13 +3,14 @@ import Spinner from "../../Spinner";
 import CentreMessage from "./CentreMessage";
 
 // map's centre status overlays — spinner / connecting / retrying, mutually
-// exclusive so at most one shows at a time
+// exclusive so at most one shows at a time. Live goes through the same gate
+// as the other two modes; there's no separate stub branch for it.
 export default function ViewOverlays({ wsStatus, isLoading, prefetchLoading, mode, gaveUp }) {
   // prefetchLoading only gates the spinner in historic mode — its fetch is a
   // one-shot page-to-completion. HL also sets it on every background
   // prefetch poll that keeps the buffer ahead of the clock, and gating the
   // centre spinner on that would flash it every few seconds during ordinary
-  // playback.
+  // playback. Live never sets it at all — its prefetch is switched off.
   const showSpinner = (wsStatus === "connecting" || isLoading || (mode === "historic" && prefetchLoading)) && !gaveUp;
 
   return (

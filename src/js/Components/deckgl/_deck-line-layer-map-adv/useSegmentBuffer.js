@@ -1,9 +1,9 @@
 import { useCallback, useRef, useState } from "react";
 import { bisectLeft } from "./colors";
 
-// The trailing visible window, and the eviction cutoff HL uses to keep its
-// buffer bounded. Exported so the two can't drift apart — evicting anything
-// still inside the visible window would blank rows off the map.
+// The trailing visible window, and the eviction cutoff HL/Live use to keep
+// their buffer bounded. Exported so the two can't drift apart — evicting
+// anything still inside the visible window would blank rows off the map.
 export const FADE_S = 900;
 const EMPTY_FLIGHTS = { normal: [], flagged: [] };
 
@@ -14,7 +14,7 @@ const EMPTY_FLIGHTS = { normal: [], flagged: [] };
 // ranges, so merge() is an append or a single splice, never a re-sort.
 //
 // eviction of t < simTime - FADE_S runs on every tick, keeping the buffer
-// bounded for a long HL session instead of growing for the life of the
+// bounded for a long HL/Live session instead of growing for the life of the
 // component
 export default function useSegmentBuffer({ cutoffMode = "trailing" }) {
   const allRef = useRef(EMPTY_FLIGHTS);

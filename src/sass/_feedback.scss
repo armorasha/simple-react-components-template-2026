@@ -77,9 +77,19 @@
   @apply h-full rounded-lg bg-pptx-amber shadow-[0_0_8px_rgba(255,119,0,0.6)] transition-all w-[var(--pptx-progress)];
 }
 
-// Tooltip.jsx
-.tooltip-bubble {
-  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap rounded-lg;
+// CursorTooltip.jsx (used by Tooltip.jsx and deck.gl hover)
+.cursor-tooltip {
+  @apply whitespace-nowrap rounded-lg;
   @apply bg-pptx-charcoal-dark border border-pptx-blue/30 px-2.5 py-1 text-xs text-pptx-cream;
-  @apply shadow-[0_0_12px_rgba(0,80,140,0.35)] z-10;
+  @apply shadow-[0_0_12px_rgba(0,80,140,0.35)] z-50 pointer-events-none;
+}
+
+// anchor="fixed" — positioned against the viewport (e.g. Tooltip.jsx,
+// anywhere on the page). anchor="absolute" — positioned against the
+// nearest positioned ancestor (e.g. deck.gl's canvas container).
+.cursor-tooltip-fixed {
+  @apply fixed;
+}
+.cursor-tooltip-absolute {
+  @apply absolute;
 }
