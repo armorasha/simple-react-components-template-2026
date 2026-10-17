@@ -1,8 +1,19 @@
 Basemap tiles in this directory
 ================================
 
-Source data: Natural Earth (1:50m Cultural/Physical Vectors, "land" theme)
-https://www.naturalearthdata.com/downloads/50m-physical-vectors/
+Source data: Natural Earth (public domain)
+https://www.naturalearthdata.com/
+
+  Australia — 1:10m vectors, rendered by scripts/prepare_offline_tiles_v2_for_deckgl.py:
+    physical: land, bathymetry (200-6000m bands), lakes, lakes_australia, playas,
+              rivers_lake_centerlines, rivers_australia
+    cultural: urban_areas, admin_1_states_provinces_lines
+    https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+    https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
+
+  England — 1:50m "land" vectors only, rendered by
+  scripts/prepare_offline_tiles_for_deckgl.py (v1, not re-rendered since).
+    https://www.naturalearthdata.com/downloads/50m-physical-vectors/
 
 License: Public Domain
 https://www.naturalearthdata.com/about/terms-of-use/
@@ -17,12 +28,9 @@ https://www.naturalearthdata.com/about/terms-of-use/
 No attribution required; safe for commercial use.
 
 These PNG tiles are not distributed by Natural Earth directly — they were
-rendered from Natural Earth's public-domain land-polygon vector data by
-this project's own script, scripts/render_tiles.py. That script (and its
-rendering) inherits the same public-domain status as the source data.
+rendered from Natural Earth's public-domain vector data by this project's
+own scripts (above), and inherit the same public-domain status.
 
-Note: Natural Earth's public-domain status is unconditional for the
-"land" theme used here. A small number of other Natural Earth themes
-(Admin-1 boundaries, Marine Boundaries) carry additional licensing
-caveats outside the U.S. due to third-party data dependencies — those
-themes are not used by this project's tiles.
+Note: the terms page (checked 2026-10-18) makes no exception for any theme
+used here, Admin-1 state borders included. Its third-party data notes cover
+river/lake data for Europe only — that doesn't apply to the Australian tiles.
