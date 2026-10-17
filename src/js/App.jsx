@@ -28,7 +28,7 @@ import Breadcrumb from './Components/Breadcrumb';
 import Pagination from './Components/Pagination';
 import { Heading1, Heading2, Body, Muted } from './Components/Typography';
 import DeckLineLayerMap from './Components/DeckLineLayerMap';
-import BackendStatus from "../components/BackendStatus";
+import BackendStatus from "./Components/BackendStatus";
 import Select2 from './Components/Select2';
 import DefaultLayout from './Layouts/DefaultLayout';
 

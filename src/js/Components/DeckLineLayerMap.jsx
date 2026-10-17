@@ -112,8 +112,9 @@ export default function DeckLineLayerMap() {
     }),
   ];
 
+  // h-[720px] — h-96 was too short to see much of the tiles, so the map gets a proper tall card
   return (
-    <div className="relative w-full h-96 rounded-2xl overflow-hidden border border-pptx-blue/30 shadow-[0_0_30px_rgba(0,80,140,0.15)]">
+    <div className="relative w-full h-[720px] rounded-2xl overflow-hidden border border-pptx-blue/30 shadow-[0_0_30px_rgba(0,80,140,0.15)]">
       <DeckGL
         layers={layers}
         initialViewState={INITIAL_VIEW_STATE}
