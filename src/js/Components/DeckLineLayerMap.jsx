@@ -1,7 +1,6 @@
-import React from 'react';
-import { DeckGL } from '@deck.gl/react';
-import { LineLayer, ScatterplotLayer, BitmapLayer } from '@deck.gl/layers';
-import { TileLayer } from '@deck.gl/geo-layers';
+import { TileLayer } from "@deck.gl/geo-layers";
+import { BitmapLayer, LineLayer, ScatterplotLayer } from "@deck.gl/layers";
+import { DeckGL } from "@deck.gl/react";
 
 ///////////////////////
 // Basemap tile sources — switch ACTIVE_BASEMAP to change which one the map uses.
@@ -21,16 +20,21 @@ import { TileLayer } from '@deck.gl/geo-layers';
 const ACTIVE_BASEMAP = process.env.ACTIVE_BASEMAP;
 
 const BASEMAP_SOURCES = {
-  natural_earth: { url: '/tiles/{z}/{x}/{y}.png', maxZoom: 10 },
-  carto_dark_online: { url: 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', maxZoom: 19 },
+  natural_earth: { url: "/tiles/v2/{z}/{x}/{y}.png", maxZoom: 10 },
+  carto_dark_online: {
+    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+    maxZoom: 19,
+  },
 };
 
 const basemap = BASEMAP_SOURCES[ACTIVE_BASEMAP];
 
 // Sample data — not hosted by this project, pulled straight from deck.gl's own examples repo
 const DATA_URL = {
-  AIRPORTS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json',
-  FLIGHT_PATHS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/heathrow-flights.json',
+  AIRPORTS:
+    "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json",
+  FLIGHT_PATHS:
+    "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/heathrow-flights.json",
 };
 
 // Centered on Heathrow (LHR) since that's what the flight-paths dataset covers.
@@ -51,8 +55,8 @@ function getTooltip({ object }) {
   return (
     object &&
     `\
-  ${object.country || object.abbrev || ''}
-  ${object.name.indexOf('0x') >= 0 ? '' : object.name}`
+  ${object.country || object.abbrev || ""}
+  ${object.name.indexOf("0x") >= 0 ? "" : object.name}`
   );
 }
 
@@ -60,7 +64,7 @@ export default function DeckLineLayerMap() {
   // Three stacked layers: basemap tiles on the bottom, airport dots, then flight-path lines on top
   const layers = [
     new TileLayer({
-      id: 'basemap',
+      id: "basemap",
       data: basemap.url,
       minZoom: 0,
       maxZoom: basemap.maxZoom,
@@ -77,17 +81,17 @@ export default function DeckLineLayerMap() {
       },
     }),
     new ScatterplotLayer({
-      id: 'airports',
+      id: "airports",
       data: DATA_URL.AIRPORTS,
       radiusScale: 20,
       getPosition: (d) => d.coordinates,
       getFillColor: [255, 140, 0],
       // Major airports get the biggest dot, small ones the smallest, everything else in between
       getRadius: (d) => {
-        if (d.type.search('major') >= 0) {
+        if (d.type.search("major") >= 0) {
           return 100;
         }
-        if (d.type.search('small') >= 0) {
+        if (d.type.search("small") >= 0) {
           return 30;
         }
         return 60;
@@ -95,7 +99,7 @@ export default function DeckLineLayerMap() {
       pickable: true,
     }),
     new LineLayer({
-      id: 'flight-paths',
+      id: "flight-paths",
       data: DATA_URL.FLIGHT_PATHS,
       opacity: 0.8,
       getSourcePosition: (d) => d.start,
@@ -123,12 +127,12 @@ export default function DeckLineLayerMap() {
         // Additive blending — overlapping flight paths glow brighter where they
         // cross instead of just stacking as flat opaque lines
         parameters={{
-          blendColorOperation: 'add',
-          blendColorSrcFactor: 'src-alpha',
-          blendColorDstFactor: 'one',
-          blendAlphaOperation: 'add',
-          blendAlphaSrcFactor: 'one-minus-dst-alpha',
-          blendAlphaDstFactor: 'one',
+          blendColorOperation: "add",
+          blendColorSrcFactor: "src-alpha",
+          blendColorDstFactor: "one",
+          blendAlphaOperation: "add",
+          blendAlphaSrcFactor: "one-minus-dst-alpha",
+          blendAlphaDstFactor: "one",
         }}
         getTooltip={getTooltip}
       />
