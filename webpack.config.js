@@ -43,12 +43,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    // Bakes ACTIVE_BASEMAP from the container's env (see .env / .env.example)
-    // into the client bundle as process.env.ACTIVE_BASEMAP. Falls back to
-    // 'natural_earth' when the var isn't set, so a build without a .env
-    // still works instead of shipping 'undefined'.
+    // Bakes these from the container's env (see .env / .env.example) into the
+    // client bundle as process.env.<KEY>. Every key the browser code reads has
+    // to be listed here — webpack 5 ships no process shim, so an undeclared
+    // process.env.FOO stays a real `process` lookup and throws at runtime, not
+    // at build. Each one gets a default so a build without a .env still works
+    // instead of shipping 'undefined'.
     new webpack.EnvironmentPlugin({
       ACTIVE_BASEMAP: 'natural_earth',
+      API_BASE_URL: 'http://localhost:8002',
+      MAX_WINDOW_SEGMENTS: '700000',
     }),
   ],
   devServer: {
