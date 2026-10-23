@@ -1,0 +1,41 @@
+{
+  "tile_scheme": "{z}/{x}/{y}.jpg (XYZ / slippy-map, required by TileLayer's URL template)",
+  "renderer": "scripts/natural_earth/prepare_tiles.py",
+  "config": "config.json",
+  "last_rendered": "2026-10-23",
+  "rendered_this_run": 72,
+  "regions": [
+    {
+      "name": "australia",
+      "bbox": {
+        "lat_min": -45.0,
+        "lat_max": -9.0,
+        "lon_min": 110.0,
+        "lon_max": 166.0
+      },
+      "max_zoom": 10
+    },
+    {
+      "name": "england",
+      "bbox": {
+        "lat_min": 49.9,
+        "lat_max": 55.9,
+        "lon_min": -6.5,
+        "lon_max": 1.9
+      },
+      "max_zoom": 10
+    },
+    {
+      "name": "world",
+      "bbox": {
+        "lat_min": -85.0,
+        "lat_max": 85.0,
+        "lon_min": -180.0,
+        "lon_max": 180.0
+      },
+      "max_zoom": 3
+    }
+  ],
+  "max_zoom": 10,
+  "tile_count": 26792
+}

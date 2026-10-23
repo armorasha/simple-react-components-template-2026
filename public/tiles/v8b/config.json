@@ -1,0 +1,195 @@
+{
+  "description": "v8b: v8 (day mode in the project's palette with Shaded Relief) with stronger soft-light shading: contrast 5.0, strength 0.9.",
+  "source": {
+    "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson"
+  },
+  "raster": {
+    "url": "https://naciscdn.org/naturalearth/10m/raster/SR_HR.zip",
+    "name": "SR_HR"
+  },
+  "shading": {
+    "strength": 0.9,
+    "contrast": 5.0,
+    "mid": 206
+  },
+  "image_format": "jpeg",
+  "jpeg_quality": 85,
+  "tile_size": 256,
+  "background": "shallow_water",
+  "regions": [
+    {
+      "name": "australia",
+      "bbox": [-45.0, -9.0, 110.0, 166.0],
+      "max_zoom": 10
+    },
+    {
+      "name": "england",
+      "bbox": [49.9, 55.9, -6.5, 1.9],
+      "max_zoom": 10
+    },
+    {
+      "name": "world",
+      "bbox": [-85.0, 85.0, -180.0, 180.0],
+      "max_zoom": 3
+    }
+  ],
+  "colours": {
+    "shallow_water": [180, 196, 216],
+    "land": [230, 237, 247],
+    "coast": [122, 140, 163],
+    "urban": [210, 218, 230],
+    "playa": [236, 230, 214],
+    "playa_edge": [170, 160, 135],
+    "lake_edge": [122, 140, 163],
+    "river": [22, 112, 176],
+    "river_intermittent": [120, 160, 200],
+    "state_border": [90, 106, 125]
+  },
+  "layers": [
+    {
+      "file": "ne_10m_bathymetry_K_200",
+      "kind": "fill",
+      "colour": [170, 187, 209],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_J_1000",
+      "kind": "fill",
+      "colour": [160, 178, 202],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_I_2000",
+      "kind": "fill",
+      "colour": [150, 169, 195],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_H_3000",
+      "kind": "fill",
+      "colour": [140, 160, 188],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_G_4000",
+      "kind": "fill",
+      "colour": [130, 151, 181],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_F_5000",
+      "kind": "fill",
+      "colour": [122, 140, 163],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_bathymetry_E_6000",
+      "kind": "fill",
+      "colour": [112, 130, 153],
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_land",
+      "kind": "fill",
+      "colour": "land",
+      "outline": "coast",
+      "min_zoom": 0
+    },
+    {
+      "file": "ne_10m_urban_areas",
+      "kind": "fill",
+      "colour": "urban",
+      "min_zoom": 6
+    },
+    {
+      "file": "ne_10m_playas",
+      "kind": "fill",
+      "colour": "playa",
+      "outline": "playa_edge",
+      "min_zoom": 4
+    },
+    {
+      "file": "ne_10m_lakes",
+      "kind": "fill",
+      "colour": "playa",
+      "outline": "playa_edge",
+      "min_zoom": 3,
+      "where": {
+        "featurecla": "Alkaline Lake"
+      }
+    },
+    {
+      "file": "ne_10m_lakes",
+      "kind": "fill",
+      "colour": "shallow_water",
+      "outline": "lake_edge",
+      "min_zoom": 3,
+      "where": {
+        "featurecla": {
+          "not": "Alkaline Lake"
+        }
+      }
+    },
+    {
+      "file": "ne_10m_lakes_australia",
+      "kind": "fill",
+      "colour": "playa",
+      "outline": "playa_edge",
+      "min_zoom": 4,
+      "where": {
+        "featurecla": "Alkaline Lake"
+      }
+    },
+    {
+      "file": "ne_10m_lakes_australia",
+      "kind": "fill",
+      "colour": "shallow_water",
+      "outline": "lake_edge",
+      "min_zoom": 4,
+      "where": {
+        "featurecla": {
+          "not": "Alkaline Lake"
+        }
+      }
+    },
+    {
+      "file": "ne_10m_rivers_lake_centerlines",
+      "kind": "line",
+      "colour": "river",
+      "width": 1,
+      "min_zoom": 5
+    },
+    {
+      "file": "ne_10m_rivers_australia",
+      "kind": "line",
+      "colour": "river_intermittent",
+      "width": 1,
+      "min_zoom": 6,
+      "where": {
+        "featurecla": "River (Intermittent)"
+      }
+    },
+    {
+      "file": "ne_10m_rivers_australia",
+      "kind": "line",
+      "colour": "river",
+      "width": 1,
+      "min_zoom": 5,
+      "where": {
+        "featurecla": {
+          "in": ["River", "Lake Centerline"]
+        }
+      }
+    },
+    {
+      "file": "ne_10m_admin_1_states_provinces_lines",
+      "kind": "line",
+      "colour": "state_border",
+      "width": 1,
+      "min_zoom": 3,
+      "where": {
+        "ADM0_A3": "AUS"
+      }
+    }
+  ]
+}
